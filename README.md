@@ -5,12 +5,20 @@ XISM is a web-based semantic map generation tool that allows users to upload Exc
 
 <h4 align="center">
     <p>
-        <a href="#-upload-excel-file">📂 upload</a> |
-        <a href="#-graph-controls">✏️ edit</a> |
-        <a href="#-evaluation-metrics">🥸 evaluate</a> |
-        <a href="#-image-save">⏬ download</a> |
+        <a href="#-prerequisites">🤖 Prerequisites</a> |
+        <a href="#-installation-steps">📦 Installation</a> |
+        <a href="#-run-the-system">🚀 run</a> |
+        <a href="#-user-guide">🪄 guide</a> 
     <p>
 </h4> 
+
+## 🤖 Prerequisites
+
+Before getting started, make sure your system has:
+
+- **Python 3.10+**
+- **pip** (Python package manager)
+- **Git**
 
 ## 📦 Installation Steps
 
@@ -25,7 +33,7 @@ cd XISM
 pip install -r requirements.txt
 ```
 
-## ✨ Run the system
+## 🚀 Run the system
 First, you need to specify the port number on which the entire service will run. By default, it is set to 5086, and you can modify the port in the utils.py file:
 ```python
 port = your_local_port
@@ -35,15 +43,8 @@ Run the app.py file just like you would run any other Python script:
 python app.py
 ``` 
 
-## ✨Feature Overview  
 
-- Upload Excel files to generate maps  
-- Dynamic map editing  
-- Interactive graphical interface  
-- Evaluate map quality  
-- Export maps as PNG images
-
-## ✨User Guide  
+## 🪄 User Guide  
 
 ### 📁 Upload Excel File  
 
