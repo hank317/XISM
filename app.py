@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 from SMM import SemanticMap
+from utils import port
 
 import numpy as np
 import pandas as pd
@@ -420,4 +421,4 @@ def get_forms_with_nodes(df, feature_map):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5086)
+    app.run(debug=True, host='0.0.0.0', port=port)
