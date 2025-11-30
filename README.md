@@ -1,6 +1,15 @@
-# XISM: eXplanatory-Interactive Semantic Map  
+# XISM: eXplanatory-Interactive Semantic Map ![Static Badge](https://img.shields.io/badge/Apache-2.0-green) 
 
 XISM is a web-based semantic map generation tool that allows users to upload Excel files (form-function correspondence tables) to generate interactive semantic maps, supporting real-time editing and exporting images.  
+
+<h4 align="center">
+    <p>
+        <a href="#-upload-excel-file">🤖 upload</a> |
+        <a href="#-graph-controls">💫 edit</a> |
+        <a href="#-evaluation-metrics">💥 evaluate</a> |
+        <a href="#-image-save">🤝 download</a> |
+    <p>
+</h4>  
 
 ## ✨Feature Overview  
 
