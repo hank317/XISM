@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XISM: eXplotary and Interactive Semantic Map</title>
+    <link rel="icon" type="image/png" href="logo/web logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Import Vis.js library for graph visualization -->
+    <script src="libs/vis-network.min.js"></script>
+    <!-- Import xlsx.js library for Excel file processing -->
+    <script src="libs/xlsx.full.min.js"></script>
+    <!-- Import html2canvas for image export -->
+    <script src="libs/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><img src="logo/web title.png" alt="XISM Logo" class="title-logo">XISM: eXplotary and Interactive Semantic Map</h1>
+        </header>
+        
+        <div class="upload-section">
+            <h2>Upload Excel File</h2>
+            <div class="file-upload">
+                <div class="custom-file-input">
+                    <input type="file" id="excel-file" accept=".xlsx, .xls" style="display: none;">
+                    <button id="file-select-btn" class="file-select-button">Choose File</button>
+                </div>
+                <button id="upload-btn">Upload and Generate Graph</button>
+            </div>
+            <div id="file-info"></div>
+            <button id="download-guide-btn" class="download-guide-button" title="Download Guide">Download Guide</button>
+            <button id="example-btn" class="example-button" title="Load example file">ex.1</button>
+            <button id="example-btn-2" class="example-button" title="Load example file 2">ex.2</button>
+            <button id="example-btn-3" class="example-button" title="Load example file 3">ex.3</button>
+        </div>
+        
+        <div class="graph-section">
+            <div class="graph-controls">
+                <h2>Graph Controls</h2>
+                <div class="control-group">
+                    <button id="add-edge-btn">Add Edge</button>
+                    <button id="edit-edge-btn">Edit Edge</button>
+                    <button id="delete-edge-btn">Delete Edge</button>
+                    <button id="merge-edge-btn">Merge Edge</button>
+                    <button id="center-btn">Center</button>
+                    <button id="beautiful-btn">Beautify</button>
+    
+                    <button id="download-btn">Download Image</button>
+                </div>
+                
+                <!-- Form Filter Module -->
+                <div class="form-filter-section">
+                    <h3>Form Filter</h3>
+                    <div class="form-filter-dropdown">
+                        <button id="form-filter-btn" class="dropdown-btn">All Forms ▼</button>
+                        <div id="form-filter-menu" class="dropdown-menu" style="display: none;">
+                            <div class="dropdown-item" data-form="all">All Forms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="edge-form" id="edge-form" style="display: none;">
+                    <h3>Add Edge</h3>
+                    <select id="from-node"></select>
+                    <select id="to-node"></select>
+                    <input type="text" id="edge-label" placeholder="Edge Label (Optional)">
+                    <button id="confirm-add-edge">Confirm</button>
+                    <button id="cancel-add-edge">Cancel</button>
+                </div>
+                <div class="edit-edge-form" id="edit-edge-form" style="display: none;">
+                    <h3>Edit Edge</h3>
+                    <input type="text" id="edit-edge-label" placeholder="New Edge Label">
+                    <button id="confirm-edit-edge">Confirm</button>
+                    <button id="cancel-edit-edge">Cancel</button>
+                </div>
+            </div>
+            
+            <div class="carousel-container">
+                <button id="prev-btn" class="carousel-btn">❮</button>
+                
+                <div class="carousel-slides">
+                    <div class="carousel-slide active">
+                        <h3 class="graph-title">Semantic Map</h3>
+                        <div id="graph-container-1" class="graph-container"></div>
+                    </div>
+                </div>
+                
+                <button id="next-btn" class="carousel-btn">❯</button>
+            </div>
+            
+            <div class="carousel-indicators">
+                <span class="indicator active" data-index="0"></span>
+            </div>
+            
+            <!-- 评价指标固定展示模块 -->
+            <div class="evaluation-metrics-panel">
+                <h3>Current Semantic Map Evaluation Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-label">Weight Sum:</span>
+                        <span class="metric-value" data-metric="weight_sum">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Degree Mean:</span>
+                        <span class="metric-value" data-metric="deg_mean">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Degree Std:</span>
+                        <span class="metric-value" data-metric="deg_std">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Coverage:</span>
+                        <span class="metric-value" data-metric="coverage">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Productivity:</span>
+                        <span class="metric-value" data-metric="productivity">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Accuracy:</span>
+                        <span class="metric-value" data-metric="acc">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Precision:</span>
+                        <span class="metric-value" data-metric="prec">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Recall:</span>
+                        <span class="metric-value" data-metric="recall">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">F1 Score:</span>
+                        <span class="metric-value" data-metric="F1">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Unconnected Forms 展示模块 -->
+            <div class="unconnected-forms-panel">
+                <h3>Unconnected Forms</h3>
+                <div class="forms-container" id="unconnected-forms-container">
+                    <div class="no-data-message">No unconnected forms data available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Help Button -->
+    <button id="help-btn" title="系统帮助">Help</button>
+    
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="help-content"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
